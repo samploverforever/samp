@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head> 
+        <title> Marrano Velez </title>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="./images/000.gif" type="image/x-icon">
+        <link rel="styleSheet"
+         href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" 
+         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" 
+         crossorigin="anonymous" />
+        <link rel="stylesheet" href="styleSheet.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=DM+Sans&display=swap" rel="stylesheet">
+        <style>
+          img:hover {
+            animation: shake 0.1s;
+            animation-iteration-count: infinite;
+          }
+          
+          @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+          }
+          </style>
+    </head>
+    <body onclick="PlayAudio()">
+      <header>
+
+        <body background="44.gif"></body>
+      
+        <!--Barra de navegación-->
+        <nav class="navbar justify-content-center " style="background-color: #ffffff;">
+            <a class="navbar-brand" href="#"> <img src="./images/000.gif" width="80px"  alt="Olimpo" />
+            </a>
+
+              <ul class="nav">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="index.html"><h6>Inicio</h6></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="acerca_de.html"><h6>Historia</h6></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="vv.html"><h6>Juegos que nos debe el jabali</h6></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="mm.html"><h6>Merchandising</h6></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="gg.html"><h6>La VERDAD</h6></a>
+                </li>
+              </ul>
+
+              <!--Foto de fondo pestaña-->
+        </nav>
+        <div class="cover d-flex justify-content-end align-items-start p-5 flex-column"
+        style="background-image:url(./images/88.webp)">
+          <h1 style="color:white">
+            Chancho Velez
+          </h1>
+          <p>
+            El streamer conocido como Pipivelez partio de este mundo el 25 de Enero en una playa de mardel, confundido fatalmente con una foca con sobrepeso, un tiburon se lo comio
+            lo que hoy vemos haciendo stream es una IA programada con sus mismas fisicas de ubres y lonjas.
+
+
+          </p>
+
+          <p>
+            2000-2025 25 años sin trabajar un capo
+          </p>
+          
+        </div>
+      </header>
+
+      <section>
+        <div class="container mt-5 mb-5">
+         
+          <p style="text-align:center;">
+             <img src="./images/SAJ.png" width="600px"
+           
+          </p>
+        </div>
+      </section>
+      <section>
+        <h5> </h5>
+        
+
+
+              
+
+          </div>
+        </div>
+      </section>
+
+      <audio id="musica1" autoplay loop >
+        
+        <source src="images/hh.mp3" type="audio/mpeg">
+        Tu navegador no soporta el elemento "audio".
+      </audio>
+
+      <script>
+        function PlayAudio() {
+          document.getElementById("musica1").play();
+        }
+      </script>
+
+    </body>
+</html>
+

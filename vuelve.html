@@ -1,0 +1,193 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>prime</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            background-color: #000; /* Fondo negro para vibe retro */
+            cursor: pointer;
+            font-family: 'Press Start 2P', cursive;
+        }
+        .bounce-image {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            pointer-events: none;
+            border-radius: 50%;
+        }
+        #countdown {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(45deg, #00FFFF, #FF00FF); /* Gradiente neón */
+            color: #FFFF00; /* Texto amarillo neón */
+            padding: 15px 25px;
+            border: 4px solid #00FF00; /* Borde verde neón */
+            border-radius: 10px;
+            font-size: 14px;
+            text-align: center;
+            z-index: 10;
+            box-shadow: 0 0 15px #00FFFF, 0 0 30px #FF00FF; /* Sombra brillante */
+            text-shadow: 2px 2px 4px #000; /* Sombra de texto */
+            animation: blink 1.5s infinite; /* Efecto de parpadeo */
+            line-height: 1.5;
+        }
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div id="countdown">El prime volvera exactamente en: 0 días, 0 horas, 0 minutos, 0 segundos</div>
+    <script>
+        // Array de URLs de imágenes
+        const images = [
+            'https://i.imgur.com/z6dLLSG.png',
+            'https://i.imgur.com/z6dLLSG.png'
+        ];
+
+        // Array para almacenar imágenes y sus velocidades
+        const bouncingImages = [];
+
+        // Función para obtener una imagen aleatoria
+        function getRandomImage() {
+            return images[Math.floor(Math.random() * images.length)];
+        }
+
+        // Función para obtener una posición aleatoria
+        function getRandomPosition() {
+            const maxX = window.innerWidth - 50;
+            const maxY = window.innerHeight - 50;
+            const x = Math.random() * maxX;
+            const y = Math.random() * maxY;
+            return { x, y };
+        }
+
+        // Función para obtener una velocidad aleatoria
+        function getRandomVelocity() {
+            const speed = 5;
+            const angle = Math.random() * 2 * Math.PI;
+            return {
+                vx: Math.cos(angle) * speed,
+                vy: Math.sin(angle) * speed
+            };
+        }
+
+        // Evento de clic para crear una nueva imagen
+        document.addEventListener('click', (event) => {
+            const img = document.createElement('img');
+            img.src = getRandomImage();
+            img.className = 'bounce-image';
+            const pos = getRandomPosition();
+            img.style.left = `${pos.x}px`;
+            img.style.top = `${pos.y}px`;
+            document.body.appendChild(img);
+
+            bouncingImages.push({
+                element: img,
+                x: pos.x,
+                y: pos.y,
+                vx: getRandomVelocity().vx,
+                vy: getRandomVelocity().vy
+            });
+        });
+
+        // Función para actualizar las posiciones y manejar rebotes
+        function update() {
+            bouncingImages.forEach((imgObj) => {
+                imgObj.x += imgObj.vx;
+                imgObj.y += imgObj.vy;
+
+                if (imgObj.x <= 0 || imgObj.x >= window.innerWidth - 50) {
+                    imgObj.vx = -imgObj.vx;
+                    imgObj.x = Math.max(0, Math.min(imgObj.x, window.innerWidth - 50));
+                }
+                if (imgObj.y <= 0 || imgObj.y >= window.innerHeight - 50) {
+                    imgObj.vy = -imgObj.vy;
+                    imgObj.y = Math.max(0, Math.min(imgObj.y, window.innerHeight - 50));
+                }
+
+                imgObj.element.style.left = `${imgObj.x}px`;
+                imgObj.element.style.top = `${imgObj.y}px`;
+            });
+
+            requestAnimationFrame(update);
+        }
+
+        // Iniciar la animación
+        requestAnimationFrame(update);
+
+        // Contador para el 6 de enero de 2026
+        function updateCountdown() {
+            const targetDate = new Date('January 6, 2026 00:00:00').getTime();
+            const now = new Date().getTime();
+            const timeLeft = targetDate - now;
+
+            if (timeLeft <= 0) {
+                document.getElementById('countdown').textContent = '¡Llegó el 6 de enero!';
+                return;
+            }
+
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            document.getElementById('countdown').textContent = 
+                `El prime volvera exactamente en: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }
+
+        // Actualizar el contador cada segundo
+        setInterval(updateCountdown, 1000);
+        updateCountdown(); // Llamada inicial
+    </script>
+</body>
+</html>
