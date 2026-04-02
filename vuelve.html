@@ -82,11 +82,43 @@
             0% { opacity: 1; }
             50% { opacity: 0.7; }
             100% { opacity: 1; }
+            .btn-descarga {
+            position: fixed;
+            bottom: 30px; /* Lo ubica en la parte inferior de la pantalla */
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 250px;
+            height: 60px;
+            /* 👇 REEMPLAZA ESTA URL POR LA IMAGEN QUE QUIERAS DE FONDO 👇 */
+            background-image: url('https://tuservidor.com/tu-imagen-retro.png'); 
+            background-size: cover;
+            background-position: center;
+            color: #FFFF00; /* Amarillo para mantener la consistencia */
+            text-decoration: none; /* Quita la línea de abajo del link */
+            border: 4px solid #00FF00; /* Borde verde neón */
+            border-radius: 10px;
+            font-size: 12px;
+            z-index: 20; /* Lo mantiene por encima de las caras rebotando */
+            text-shadow: 2px 2px 4px #000;
+            box-shadow: 0 0 10px #00FFFF;
+            transition: all 0.3s ease;
+        }
+
+        .btn-descarga:hover {
+            box-shadow: 0 0 20px #00FFFF, 0 0 40px #FF00FF; /* Brillo extra al pasar el mouse */
+            transform: translateX(-50%) scale(1.05); /* Pequeño zoom */
+        }
         }
     </style>
 </head>
 <body>
     <div id="countdown">El prime volvera exactamente en: 0 días, 0 horas, 0 minutos, 0 segundos</div>
+    <a href="https://www.mediafire.com/file/rnok1rle2kuwqdv/prime.rar/file" target="_blank" class="btn-descarga">
+        DESCARGAR PRIME
+    </a>
     <script>
         // Array de URLs de imágenes
         const images = [
